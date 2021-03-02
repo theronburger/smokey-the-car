@@ -5,7 +5,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import { useDrag } from 'react-use-gesture'
 import { useSpring, a } from 'react-spring/three'
 
-const CarPart = ({ speed, factor, url, part, draggable, setOrbitActive, color,  playSoundfunction,  ...props }) => {
+const CarPart = ({ speed, factor, url, part, draggable, setOrbitActive, color,  setText,setCarColor,  ...props }) => {
   console.log("CarPart :" + part + " draggable:" + draggable)
   const { viewport } = useThree()
   const [falling, setFalling] = useState(false)
@@ -25,6 +25,8 @@ const CarPart = ({ speed, factor, url, part, draggable, setOrbitActive, color,  
       if (distance > 50 && draggable) {
         //playSoundfunction()
         setFalling(true)
+        setText("Much better! Now she's electric!")
+        setCarColor("#86A5F6")
       }
       setOrbitActive(!down)
       const aspect = viewport().factor

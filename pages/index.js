@@ -8,7 +8,7 @@ import Head from 'next/head'
 
 
 const CarPart = dynamic(() => import('../components/CarPart'), { ssr: false })
-const Car = ({url, part, draggable, color, setOrbitActive, playSoundfunction}) => {
+const Car = ({url, part, draggable, color, setOrbitActive, setText, setCarColor}) => {
     const x = 0
     const y = 0
     const z = 0
@@ -25,7 +25,8 @@ const Car = ({url, part, draggable, color, setOrbitActive, playSoundfunction}) =
         draggable = {draggable}
         setOrbitActive = {setOrbitActive}
         color = {color}
-        playSoundfunction = {playSoundfunction}
+        setText = {setText}
+        setCarColor = {setCarColor}
       />
     )
 }
@@ -59,10 +60,13 @@ const UnusedAudioPlayer = () => {
 }
 
 const CarPage = (props) => {
+
+  const [text, setText] = useState("Hmmm.... little old smokey needs an upgrade!")
+  const [carColor, setCarColor] = useState("hotpink")
   const [orbitActive, setOrbitActive] = useState(true)
   return (
     <>
-      <h1>Smokey the Car gets an upgrade!</h1>
+      <h1>{text}</h1>
 
       <Canvas camera={{ position: [0, 100, 500] }}>
 
@@ -70,12 +74,12 @@ const CarPage = (props) => {
         <pointLight position={[40, 40, 40]} />
         { orbitActive ? <OrbitControls /> : "" }
         <Suspense fallback={null}>
-          <Car url="car" part="car_body" setOrbitActive={setOrbitActive} color="hotpink"/>
+          <Car url="car" part="car_body" setOrbitActive={setOrbitActive} color={carColor}/>
           <Car url="car" part="wheel1" setOrbitActive={setOrbitActive} color="#1E1E1E"/>
           <Car url="car" part="wheel2" setOrbitActive={setOrbitActive}color="#1E1E1E"/>
           <Car url="car" part="wheel3" setOrbitActive={setOrbitActive}color="#1E1E1E"/>
           <Car url="car" part="wheel4" setOrbitActive={setOrbitActive}color="#1E1E1E"/>
-          <Car url="car" part="bad_bits" draggable="true" setOrbitActive={setOrbitActive}/>
+          <Car url="car" part="bad_bits" draggable="true" setOrbitActive={setOrbitActive} setText={setText} setCarColor={setCarColor}/>
         </Suspense>
       </Canvas>
     </>
